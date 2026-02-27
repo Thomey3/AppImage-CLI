@@ -45,5 +45,6 @@ do_uninstall() {
         log_info "实例 $search_name 卸载完成。"
     else
         log_error "系统内不存在目标实体: $search_name"
+        exit 1
     fi
 }

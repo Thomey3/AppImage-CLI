@@ -5,8 +5,8 @@ log_error() { echo -e "\e[31m[ERROR]\e[0m $1" >&2; }
 
 # 允许测试环境通过环境变量覆写路径，实现沙箱隔离
 # 优先使用环境变量中已设置的 REAL_HOME，避免测试环境变量被覆盖
+# shellcheck disable=SC2034
 REAL_HOME="${REAL_HOME:-$(getent passwd "${SUDO_USER:-$USER}" | cut -d: -f6)}"
-
 
 # 允许测试环境通过环境变量覆写路径，实现沙箱隔离
 # shellcheck disable=SC2034

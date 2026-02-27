@@ -7,10 +7,10 @@ do_clean_dir() {
     for desktop in "$d_dir"/*.desktop; do
         [ -f "$desktop" ] || continue
         local exec_path
-        exec_path=$(grep "^Exec=" "$desktop" | cut -d'=' -f2- | tr -d '"' | sed 's/firejail --appimage //g' | xargs)
+        exec_path=$(grep -E "^Exec=" "$desktop" | cut -d'=' -f2- | tr -d '"' | sed 's/firejail --appimage //g' | xargs)
         if [ -n "$exec_path" ] && [ ! -f "$exec_path" ]; then
             rm -f "$desktop"
-            ((cleaned_count++))
+            ((cleaned_count++)) || true
         fi
     done
 
@@ -22,7 +22,7 @@ do_clean_dir() {
         for target in "$t_dir"/*; do
             [[ "$(basename "$target")" == "$app_name".* ]] && { has_target=1; break; }
         done
-        [ "$has_target" -eq 0 ] && { rm -f "$icon"; ((cleaned_count++)); }
+        [ "$has_target" -eq 0 ] && { rm -f "$icon"; ((cleaned_count++)) || true; }
     done
 }
 
