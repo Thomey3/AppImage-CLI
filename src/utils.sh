@@ -43,6 +43,8 @@ init_env_paths() {
 refresh_desktop_database() {
     if command -v update-desktop-database >/dev/null 2>&1; then
         update-desktop-database "$LOCAL_DESKTOP_DIR" 2>/dev/null || true
-        [ "${EUID:-0}" -eq 0 ] && update-desktop-database "$GLOBAL_DESKTOP_DIR" 2>/dev/null || true
+        if [ "${EUID:-0}" -eq 0 ]; then
+            update-desktop-database "$GLOBAL_DESKTOP_DIR" 2>/dev/null || true
+        fi
     fi
 }
