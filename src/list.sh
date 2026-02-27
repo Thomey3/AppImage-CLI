@@ -6,22 +6,25 @@ do_list() {
     echo "--------------------------------------------------------------------------------------------------"
     
     local count=0
+    local file 
+    local filename 
+    local app_name
 
-    # 扫描全局域
+    # 遍历并输出全局域映射
     for file in "$GLOBAL_TARGET_DIR"/*; do
         if [ -f "$file" ]; then
-            local filename=$(basename "$file")
-            local app_name="${filename%.*}"
+            filename=$(basename "$file")
+            app_name="${filename%.*}"
             printf "%-30s | %-15s | %-50s\n" "$app_name" "Global (全局)" "$file"
             ((count++))
         fi
     done
 
-    # 扫描个人域
+    # 遍历并输出个人域映射
     for file in "$LOCAL_TARGET_DIR"/*; do
         if [ -f "$file" ]; then
-            local filename=$(basename "$file")
-            local app_name="${filename%.*}"
+            filename=$(basename "$file")
+            app_name="${filename%.*}"
             printf "%-30s | %-15s | %-50s\n" "$app_name" "Local  (个人)" "$file"
             ((count++))
         fi
@@ -31,5 +34,4 @@ do_list() {
         echo "(空)"
     fi
     echo "--------------------------------------------------------------------------------------------------"
-    log_info "系统共计收录 $count 个实例。"
 }
